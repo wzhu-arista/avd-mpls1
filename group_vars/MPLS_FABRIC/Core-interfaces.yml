@@ -2,12 +2,13 @@
 
 # Backone Interfaces
 
-backbone_interfaces:
+core_interfaces:
   p2p_links_ip_pools:
-    underlay_pool: 100.64.48.0/24
+    - name: underlay_pool
+      ipv4_pool: 100.64.48.0/24
   p2p_links_profiles:
-    default_bb_profile:
-      speed: "forced 40gfull"
+    - name: default_bb_profile
+      # speed: "forced 40gfull"
       mtu: 9000
       isis_hello_padding: true
       isis_metric: 10

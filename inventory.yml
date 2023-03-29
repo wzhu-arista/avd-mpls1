@@ -21,26 +21,26 @@ all:
         PE_ROUTERS:
           hosts:
             PE-01:
-              ansible_host: 10.92.61.97
+              ansible_host: 192.168.111.233
             PE-02:
-              ansible_host: 10.92.61.163
+              ansible_host: 192.168.111.234
             PE-03:
-              ansible_host: 10.92.61.165
+              ansible_host: 192.168.111.235
             PE-04:
-              ansible_host: 10.92.61.98
+              ansible_host: 192.168.111.236
         RR_ROUTERS:
           hosts:
             P-01:
-              ansible_host: 10.92.61.162
+              ansible_host: 192.168.111.231
             P-02:
-              ansible_host: 10.92.61.164
+              ansible_host: 192.168.111.232
 
     CPE_ROUTERS:
       hosts:
         CPE-01:
-          ansible_host: 10.92.61.157
+          ansible_host: 192.168.111.237
         CPE-02:
-          ansible_host: 10.92.61.169
+          ansible_host: 192.168.111.238
 
     VPN_SERVICES:
       children:

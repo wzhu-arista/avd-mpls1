@@ -1,0 +1,19 @@
+- hosts: EOS
+  vars:
+    ansible_user: admin
+    ansible_password: Arista1
+    # network_cli will use SSH to connect
+    ansible_connection: network_cli
+  tasks:
+  - name: configure SSL certificate
+    eos_command:
+      commands:
+        - "enable"
+        - "copy file:/persist/secure/capi.pem certificate:"
+        - "copy file:/persist/secure/capikey.pem sslkey:"
+        - "configure"
+        - "management security"
+        - "ssl profile CLIENT"
+        - "certificate capi.pem key capikey.pem"
+        - "management api http-commands"
+        - "protocol https ssl profile CLIENT"
