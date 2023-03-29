@@ -1,0 +1,111 @@
+---
+
+# VPN Services tests
+
+- name: Validate PE-01 VPN Services
+  hosts: PE-01
+
+  tasks:
+
+    - name: Show VPWS and L3VPN service State
+      eos_command:
+        commands: "{{ item }}"
+      loop:
+        - "show patch panel detail | json"
+        - "show ip route vrf TENANT_A_WAN | json"
+        - "show ip bgp summary vrf TENANT_A_WAN | json"
+      ignore_errors: true
+      register: PE_01_state
+
+    - name: show output
+      debug:
+        msg: "{{ item }}"
+      loop:
+        - "{{ PE_01_state.results[0].stdout_lines }}"
+        - "{{ PE_01_state.results[1].stdout_lines }}"
+        - "{{ PE_01_state.results[2].stdout_lines }}"
+
+- name: Validate PE-04 VPN Services
+  hosts: PE-04
+
+  tasks:
+
+    - name: Show VPWS and L3VPN service State
+      eos_command:
+        commands: "{{ item }}"
+      loop:
+        - "show patch panel detail | json"
+        - "show ip route vrf TENANT_A_WAN | json"
+        - "show ip bgp summary vrf TENANT_A_WAN | json"
+      ignore_errors: true
+      register: PE_04_state
+
+    - name: show output
+      debug:
+        msg: "{{ item }}"
+      loop:
+        - "{{ PE_04_state.results[0].stdout_lines }}"
+        - "{{ PE_04_state.results[1].stdout_lines }}"
+        - "{{ PE_04_state.results[2].stdout_lines }}"
+
+
+- name: Validate CPE-01 VPN Services
+  hosts: CPE-01
+
+  tasks:
+
+
+    - name: Gather ip reachability state (directly connected interfaces)
+      eos_command:
+        commands: "ping {{ item }} repeat 1"
+      loop:
+        - "vrf VPWS10 10.10.10.2"
+        - "vrf tenant-L3EVPN 10.10.200.1"
+      ignore_errors: true
+      register: ip_reachability_state
+      tags:
+        - ip_reachability
+
+    - name: Validate ip reachability (directly connected interfaces)
+      assert:
+        that:
+          - ip_reachability_test.stdout[0] | regex_search('1 received')
+        fail_msg: "100% packet loss"
+        quiet: false
+      loop: "{{ ip_reachability_state.results }}"
+      loop_control:
+        loop_var: ip_reachability_test
+      ignore_errors: true
+      register: ip_reachability_results
+      tags:
+        - ip_reachability
+
+- name: validate CPE-02 VPN Services
+  hosts: CPE-02
+
+  tasks:
+
+    - name: Gather ip reachability state (directly connected interfaces)
+      eos_command:
+        commands: "ping {{ item }} repeat 1"
+      loop:
+        - "vrf VPWS10 10.10.10.1"
+        - "vrf tenant-L3EVPN 10.10.100.1"
+      ignore_errors: true
+      register: ip_reachability_state
+      tags:
+        - ip_reachability
+
+    - name: Validate ip reachability (directly connected interfaces)
+      assert:
+        that:
+          - ip_reachability_test.stdout[0] | regex_search('1 received')
+        fail_msg: "100% packet loss"
+        quiet: false
+      loop: "{{ ip_reachability_state.results }}"
+      loop_control:
+        loop_var: ip_reachability_test
+      ignore_errors: true
+      register: ip_reachability_results
+      tags:
+        - ip_reachability

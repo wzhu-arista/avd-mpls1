@@ -1,0 +1,62 @@
+---
+
+# Management Settings
+
+local_users:
+  admin:
+    privilege: 15
+    role: network-admin
+    sha512_password: "$6$YCJxvEgvNNgeS/Za$42NHyES9xkPUOiODx29DudRdqRqXnCmFV3kCaF0blakZJq60q/KcXhH3t7VeSm0DSpkqeF2RCALD0/c81jQhl1"
+  cvpadmin:
+    privilege: 15
+    role: network-admin
+    sha512_password: "$6$0vli3tFaghW2wEQn$To2mxaQwn/VBm/8t/L2XjaXDEP0ZOXmbvHv2OoMwxDF.qPdSpJHz7GbuEOnnh1FqU8cxrbFSZHxgUqmKAuxEe/"
+  dcidemo:
+    privilege: 15
+    role: dcidemo
+    sha512_password: "$6$IQnDVIimX9VLbjhz$1JzwFWiZfiVmYk5wutOyslz/NJ2vf9xd2iXtnXlxP9utJgbHvDzMScEQSsMvVpRXLEKLJF9IiwYrkyOuZ43G71"
+
+
+# OOB Management network default gateway.
+mgmt_gateway: 10.92.61.129
+mgmt_interface_vrf: mgmt
+
+# dns servers.
+name_servers:
+  - 172.22.22.10
+  - 172.22.22.40
+
+dns_domain: sjc.aristanetworks.com
+
+ntp:
+  local_interface:
+    name: "{{ mgmt_interface }}"
+    vrf: "{{ mgmt_interface_vrf }}"
+  servers:
+  - name: 0.north-america.pool.ntp.org
+    preferred: True
+    vrf: "{{ mgmt_interface_vrf }}"
+
+
+connected_endpoints_keys:
+  routers:
+    type: router
+  cpes:
+    type: cpe
+
+
+aliases: |-
+  alias agents bash ls -lrt /var/log/agents/
+  alias c bash clear
+  alias core bash ls -lrt /var/core/
+  alias d show interfaces description | grep -v 'not\|down'
+  alias log bash sudo tail -f /var/log/messages | grep -v -i xcvr
+  alias m show run section monitor
+  alias qt bash ls -lrt /var/log/qt/
+  alias senz show interface counter error | nz
+  alias shmc show int | awk '/^[A-Z]/ { intf = \$1 } /, address is/ { print intf, \$6 }'
+  alias snz show interface counter | nz
+  alias spd show port-channel %1 detail all
+  alias sqnz show interface counter queue | nz
+  alias srnz show interface counter rate | nz
+  alias top show proc top

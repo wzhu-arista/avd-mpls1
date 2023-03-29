@@ -1,0 +1,57 @@
+---
+all:
+  children:
+    CVP:
+      hosts:
+        cv_server:
+          ansible_httpapi_host: 10.20.20.20
+          ansible_host: 10.20.20.20
+          ansible_user: cvpadmin
+          ansible_password: somepassword
+          ansible_connection: httpapi
+          ansible_httpapi_use_ssl: true
+          ansible_httpapi_validate_certs: false
+          ansible_network_os: eos
+          ansible_httpapi_port: 443
+          # Configuration to get Virtual Env information
+          ansible_python_interpreter: $(which python3)
+
+    MPLS_FABRIC:
+      children:
+        PE_ROUTERS:
+          hosts:
+            PE-01:
+              ansible_host: 10.92.61.97
+            PE-02:
+              ansible_host: 10.92.61.163
+            PE-03:
+              ansible_host: 10.92.61.165
+            PE-04:
+              ansible_host: 10.92.61.98
+        RR_ROUTERS:
+          hosts:
+            P-01:
+              ansible_host: 10.92.61.162
+            P-02:
+              ansible_host: 10.92.61.164
+
+    CPE_ROUTERS:
+      hosts:
+        CPE-01:
+          ansible_host: 10.92.61.157
+        CPE-02:
+          ansible_host: 10.92.61.169
+
+    VPN_SERVICES:
+      children:
+        PE_ROUTERS:
+
+    MPLS_ENDPOINT_CONNECTIONS:
+      children:
+        PE_ROUTERS:
+
+    EOS:
+      children:
+        PE_ROUTERS:
+        RR_ROUTERS:
+        CPE_ROUTERS:

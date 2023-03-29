@@ -1,0 +1,10 @@
+---
+CVP_DEVICES:
+  []
+CVP_CONTAINERS:
+  MPLS_FABRIC:
+    parentContainerName: Tenant
+  PE_ROUTERS:
+    parentContainerName: MPLS_FABRIC
+  RR_ROUTERS:
+    parentContainerName: MPLS_FABRIC

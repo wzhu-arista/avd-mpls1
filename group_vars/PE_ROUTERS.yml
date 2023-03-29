@@ -1,0 +1,48 @@
+type: pe
+
+pe:
+  defaults:
+    virtual_router_mac_address: 00:1c:73:00:dc:00
+    loopback_ipv4_pool: 100.70.0.0/24
+    is_type: level-1-2
+    node_sid_base: 200
+    isis_system_id_prefix: '0000.0001'
+    backbone_interface_speed: forced 100gfull
+    spanning_tree_priority: 4096
+    spanning_tree_mode: mstp
+    bgp_defaults:
+      - 'no bgp default ipv4-unicast'
+      - 'distance bgp 20 200 200'
+      - 'graceful-restart restart-time 300'
+      - 'graceful-restart'
+    mpls_route_reflectors: [ P-01, P-02 ]
+    raw_eos_cli: |
+      management security
+         password encryption-key common
+  node_groups:
+    SITE_1:
+      filter:
+        tenants: [ TENANT_A, TENANT_B ]
+        tags: [ site1 ]
+      nodes:
+        PE-01:
+          id: 1
+          platform: 7280CR3K-32D4
+          mgmt_ip: 10.92.61.97/26
+        PE-02:
+          id: 2
+          platform: 7280SR3K-48YC8
+          mgmt_ip: 10.92.61.163/26
+    SITE_2:
+      filter:
+        tenants: [ TENANT_A, TENANT_B ]
+        tags: [ site2 ]
+      nodes:
+        PE-03:
+          id: 3
+          platform: 7280SR3K-48YC8
+          mgmt_ip: 10.92.61.165/26
+        PE-04:
+          id: 4
+          platform: 7280CR3K-32D4
+          mgmt_ip: 10.92.61.98/26
