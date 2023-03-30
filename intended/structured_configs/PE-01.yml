@@ -39,15 +39,43 @@ router_bgp:
   - peer_group: MPLS-OVERLAY-PEERS
     description: P-02
     ip_address: 100.70.0.12
+  vrfs:
+  - router_id: 100.70.0.1
+    rd: 100.70.0.1:10
+    route_targets:
+      import:
+      - address_family: vpn-ipv4
+        route_targets:
+        - '65000:10'
+      export:
+      - address_family: vpn-ipv4
+        route_targets:
+        - '65000:10'
+    redistribute_routes:
+    - source_protocol: connected
+    neighbors:
+    - description: CPE-01
+      remote_as: '65001'
+      password: $1c$/ei4LgYRVQVyaE3DDcjbXw==
+      send_community: standard
+      default_originate:
+        always: true
+      ip_address: 10.10.100.1
+    address_families:
+    - neighbors:
+      - activate: true
+        ip_address: 10.10.100.1
+      address_family: ipv4
+    name: TENANT_A_WAN
   vpws:
   - name: TENANT_A
     rd: 100.70.0.1:1000
     route_targets:
       import_export: 65000:1000
     pseudowires:
-    - name: TEN_A_site1_site2_eline
-      id_local: 52
-      id_remote: 53
+    - name: TEN_A_site1_site2_eline_10
+      id_local: 62
+      id_remote: 63
 static_routes:
 - vrf: mgmt
   destination_address_prefix: 0.0.0.0/0
@@ -78,8 +106,9 @@ local_users:
 vrfs:
 - name: mgmt
   ip_routing: false
-- ip_routing: true
-  name: TENANT_A_WAN
+- name: TENANT_A_WAN
+  tenant: TENANT_A
+  ip_routing: true
 management_interfaces:
 - name: Management1
   description: oob_management
@@ -160,10 +189,29 @@ ethernet_interfaces:
   isis_circuit_type: level-1-2
   mpls:
     ip: true
-- type: routed
+- peer_type: l3_interface
+  ip_address: 10.10.100.2/24
+  mtu: 9000
+  shutdown: false
+  description: L3vpn service, vlan 100
+  type: l3dot1q
+  encapsulation_dot1q_vlan: 100
+  vrf: TENANT_A_WAN
+  name: Ethernet5/2.100
+- type: l2dot1q
+  encapsulation_vlan:
+    client:
+      dot1q:
+        vlan: 10
+    network:
+      client: true
   peer_type: l3_interface
   shutdown: false
   name: Ethernet5/2.10
+- type: routed
+  peer_type: l3_interface
+  shutdown: false
+  name: Ethernet5/2
 - type: switched
   shutdown: false
   name: Ethernet5/1
@@ -174,7 +222,7 @@ router_bfd:
     multiplier: 3
 patch_panel:
   patches:
-  - name: TEN_A_site1_site2_eline
+  - name: TEN_A_site1_site2_eline_10
     enabled: true
     connectors:
     - id: '1'
@@ -182,7 +230,7 @@ patch_panel:
       endpoint: Ethernet5/2.10
     - id: '2'
       type: pseudowire
-      endpoint: bgp vpws TENANT_A pseudowire TEN_A_site1_site2_eline
+      endpoint: bgp vpws TENANT_A pseudowire TEN_A_site1_site2_eline_10
 ip_igmp_snooping:
   globally_enabled: true
 ip_virtual_router_mac_address: 00:1c:73:00:dc:00

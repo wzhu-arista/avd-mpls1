@@ -4,6 +4,7 @@ type: rr
 rr:
   defaults:
     # platform: 7280QR-C36-M
+    overlay_address_families: [ vpn-ipv4, evpn ]
     loopback_ipv4_pool: 100.70.0.0/24
     is_type: level-1-2
     node_sid_base: 300

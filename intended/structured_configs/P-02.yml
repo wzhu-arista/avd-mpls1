@@ -32,7 +32,11 @@ router_bgp:
     - activate: false
       name: RR-OVERLAY-PEERS
   address_family_evpn:
+    neighbor_default:
+      encapsulation: mpls
     peer_groups:
+    - activate: true
+      name: MPLS-OVERLAY-PEERS
     - activate: true
       name: RR-OVERLAY-PEERS
   address_family_vpn_ipv4:
