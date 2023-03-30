@@ -1,13 +1,19 @@
 tenants:
   TENANT_A:
-    mac_vrf_rt_base: 10000
+    mac_vrf_id_base: 10000
     pseudowire_rt_base: 1000
     point_to_point_services:
       - name: TEN_A_site1_site2_eline
         type: vpws-pseudowire
-        ids: [ 52, 53 ]
-        nodes: ["PE-01", "PE-04"]
-        interfaces: ["Ethernet5/2.10", "Ethernet5/3.10"]
+        # subinterfaces:
+        #   - number: 10
+        endpoints:
+          - id: 52
+            nodes: ["PE-01"]
+            interfaces: ["Ethernet5/2.10"]
+          - id: 53
+            nodes: ["PE-04"]
+            interfaces: ["Ethernet5/3.10"]
     # vrfs:
     #   TENANT_A_WAN:
     #     vrf_id: 10

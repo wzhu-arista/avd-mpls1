@@ -20,7 +20,12 @@ router_bgp:
     - activate: false
       name: MPLS-OVERLAY-PEERS
   address_family_evpn:
-    peer_groups: []
+    neighbor_default:
+      encapsulation: mpls
+      next_hop_self_source_interface: Loopback0
+    peer_groups:
+    - activate: true
+      name: MPLS-OVERLAY-PEERS
   address_family_vpn_ipv4:
     neighbor_default_encapsulation_mpls_next_hop_self:
       source_interface: Loopback0

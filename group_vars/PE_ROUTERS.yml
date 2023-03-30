@@ -2,6 +2,7 @@ type: pe
 
 pe:
   defaults:
+    overlay_address_families: [ vpn-ipv4, evpn ]
     virtual_router_mac_address: 00:1c:73:00:dc:00
     loopback_ipv4_pool: 100.70.0.0/24
     is_type: level-1-2
