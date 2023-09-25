@@ -1,0 +1,3 @@
+tenants:
+  TENANT_A: "{{ TENANT_A }}"
+  TENANT_B: "{{ TENANT_B }}"

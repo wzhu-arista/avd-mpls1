@@ -1,7 +1,7 @@
 ---
 
 custom_structured_configuration_ethernet_interfaces:
-  Ethernet52/1:
+  Ethernet4:
     # speed: forced 10000full
-    type: switched
+    type: routed
     shutdown: false

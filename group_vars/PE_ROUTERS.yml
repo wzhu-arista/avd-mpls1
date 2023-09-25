@@ -8,7 +8,7 @@ pe:
     is_type: level-1-2
     node_sid_base: 200
     isis_system_id_prefix: '0000.0001'
-    backbone_interface_speed: forced 100gfull
+    # backbone_interface_speed: forced 100gfull
     spanning_tree_priority: 4096
     spanning_tree_mode: mstp
     bgp_defaults:
@@ -29,11 +29,11 @@ pe:
         PE-01:
           id: 1
           # platform: 7280CR3K-32D4
-          mgmt_ip: 192.168.111.233/24
+          mgmt_ip: 192.168.124.103/24
         PE-02:
           id: 2
           # platform: 7280SR3K-48YC8
-          mgmt_ip: 192.168.111.234/24
+          mgmt_ip: 192.168.124.104/24
     SITE_2:
       filter:
         tenants: [ TENANT_A, TENANT_B ]
@@ -42,8 +42,8 @@ pe:
         PE-03:
           id: 3
           # platform: 7280SR3K-48YC8
-          mgmt_ip: 192.168.111.235/24
+          mgmt_ip: 192.168.124.105/24
         PE-04:
           id: 4
           # platform: 7280CR3K-32D4
-          mgmt_ip: 192.168.111.236/24
+          mgmt_ip: 192.168.124.106/24

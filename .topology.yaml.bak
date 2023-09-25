@@ -1,0 +1,56 @@
+name: mpls1
+
+topology:
+  kinds:
+    ceos:
+      # binds:
+      #   - ma1mapping.json:/mnt/flash/EosIntfMapping.json:ro
+      startup-config: ./ceos_lab_template/ceos.cfg.tpl
+      image: ceos:20230815
+      exec:
+        - sleep 10
+        - FastCli -p 15 -c 'copy file:/persist/secure/capi.pem certificate:'
+        - FastCli -p 15 -c 'copy file:/persist/secure/capikey.pem sslkey:'
+  nodes:
+    p01:
+      kind: ceos
+      mgmt-ipv4: 192.168.124.101
+    p02:
+      kind: ceos
+      mgmt-ipv4: 192.168.124.102
+    pe01:
+      kind: ceos
+      mgmt-ipv4: 192.168.124.103
+    pe02:
+      kind: ceos
+      mgmt-ipv4: 192.168.124.104
+    pe03:
+      kind: ceos
+      mgmt-ipv4: 192.168.124.105
+    pe04:
+      kind: ceos
+      mgmt-ipv4: 192.168.124.106
+    ce01:
+      kind: ceos
+      mgmt-ipv4: 192.168.124.107
+    ce02:
+      kind: ceos
+      mgmt-ipv4: 192.168.124.108
+
+
+  links:
+    - endpoints: ["p01:eth1", "p02:eth1"]
+    - endpoints: ["p01:eth2", "pe02:eth2"]
+    - endpoints: ["p01:eth3", "pe01:eth1"]
+    - endpoints: ["p01:eth4", "pe03:eth1"]
+    - endpoints: ["p02:eth2", "pe02:eth1"]
+    - endpoints: ["p02:eth3", "pe04:eth1"]
+    - endpoints: ["p02:eth4", "pe04:eth2"]
+    - endpoints: ["p02:eth5", "pe03:eth2"]
+    - endpoints: ["pe01:eth2", "pe02:eth3"]
+    - endpoints: ["pe01:eth3", "ce01:eth1_1"]
+    - endpoints: ["pe04:eth3", "ce02:eth1_1"]
+
+mgmt:
+  network: ceos_clab    
+  ipv4-subnet: 192.168.124.0/24

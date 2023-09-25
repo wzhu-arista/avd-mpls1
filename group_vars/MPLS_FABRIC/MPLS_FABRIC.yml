@@ -1,6 +1,9 @@
 ---
 # Validation lab
 # local users
+design:
+  type: mpls
+
 fabric_name: MPLS_FABRIC
 
 # Sets the administrative subfield of IP/MAC VRF Route-Distinguishers and Route-Targets
@@ -44,10 +47,11 @@ bgp_as: 65000
 
 # bgp peer groups passwords
 bgp_peer_groups:
-  MPLS_OVERLAY_PEERS:
+  mpls_overlay_peers:
     password: $1c$U4tL2vQP9QwZlxIV1K3/pw==
 
 # Update p2p mtu
 p2p_uplinks_mtu: 9000
 
 
+bgp_update_wait_install: false

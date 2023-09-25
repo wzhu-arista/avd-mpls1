@@ -18,7 +18,8 @@ local_users:
 
 
 # OOB Management network default gateway.
-mgmt_gateway: 192.168.111.1
+mgmt_gateway: 192.168.124.1
+mgmt_interface: Management0
 mgmt_interface_vrf: mgmt
 
 # dns servers.

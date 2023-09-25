@@ -1,10 +1,10 @@
 ---
-mgmt_gateway: 192.168.111.1
+mgmt_gateway: 192.168.124.1
 
 custom_structured_configuration_ethernet_interfaces:
-  Ethernet5/1:
+  Ethernet3:
     # speed: forced 10000full
-    type: switched
+    type: routed
     shutdown: false
 
 custom_structured_configuration_vrfs:
