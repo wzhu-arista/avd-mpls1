@@ -1,0 +1,54 @@
+! Startup-config last modified at Mon Sep 25 14:39:29 2023 by root
+! device: pe04 (cEOSLab, EOS-4.30.2F-33095287.eostrunkshipping (engineering build))
+!
+no aaa root
+!
+username admin privilege 15 role network-admin secret sha512 $6$CRGSzo55yZFuN1tb$p1/VXXMZ5aOm3M83QGJ.GQAuja/uuIhtqdeWV8IadXGPiUZVQmqXH21Y693Ge.4nM59wiigHyympnrJmtMFI91
+!
+transceiver qsfp default-mode 4x10G
+!
+service routing protocols model multi-agent
+!
+hostname pe04
+!
+spanning-tree mode mstp
+!
+system l1
+   unsupported speed action error
+   unsupported error-correction action error
+!
+vrf instance MGMT
+!
+management api http-commands
+   protocol https ssl profile eAPI
+   no shutdown
+   !
+   vrf MGMT
+      no shutdown
+!
+management security
+   ssl profile eAPI
+      tls versions 1.2
+      certificate capi.pem key capikey.pem
+!
+interface Ethernet1
+!
+interface Ethernet2
+!
+interface Ethernet3
+!
+interface Management0
+   description oob_management
+   vrf MGMT
+   ip address 192.168.124.106/24
+!
+no ip routing
+no ip routing vrf MGMT
+!
+ip route vrf MGMT 0.0.0.0/0 192.168.124.1
+!
+router multicast
+   ipv4
+      software-forwarding sfe
+!
+end

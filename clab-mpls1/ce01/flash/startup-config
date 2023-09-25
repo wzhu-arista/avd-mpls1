@@ -1,0 +1,50 @@
+! Startup-config last modified at Mon Sep 25 14:39:29 2023 by root
+! device: ce01 (cEOSLab, EOS-4.30.2F-33095287.eostrunkshipping (engineering build))
+!
+no aaa root
+!
+username admin privilege 15 role network-admin secret sha512 $6$841snvx4ICkJEKCM$Z2KxQo9xnUYTnDjwB.kCpRrrs2Ugtku789hAKc52l6/V44nr2ZxIaLOG1c5X29Axtl2UNWQvLBlvCZ/fqe/gH1
+!
+transceiver qsfp default-mode 4x10G
+!
+service routing protocols model multi-agent
+!
+hostname ce01
+!
+spanning-tree mode mstp
+!
+system l1
+   unsupported speed action error
+   unsupported error-correction action error
+!
+vrf instance MGMT
+!
+management api http-commands
+   protocol https ssl profile eAPI
+   no shutdown
+   !
+   vrf MGMT
+      no shutdown
+!
+management security
+   ssl profile eAPI
+      tls versions 1.2
+      certificate capi.pem key capikey.pem
+!
+interface Ethernet1/1
+!
+interface Management0
+   description oob_management
+   vrf MGMT
+   ip address 192.168.124.107/24
+!
+no ip routing
+no ip routing vrf MGMT
+!
+ip route vrf MGMT 0.0.0.0/0 192.168.124.1
+!
+router multicast
+   ipv4
+      software-forwarding sfe
+!
+end
