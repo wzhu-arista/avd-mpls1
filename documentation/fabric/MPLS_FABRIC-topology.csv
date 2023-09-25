@@ -1,0 +1,26 @@
+Node Type,Node,Node Interface,Peer Type,Peer Node,Peer Interface,Node Interface Enabled
+rr,P-01,Ethernet1,rr,P-02,Ethernet1,True
+rr,P-01,Ethernet2,pe,PE-02,Ethernet2,True
+rr,P-01,Ethernet3,pe,PE-01,Ethernet1,True
+rr,P-01,Ethernet4,pe,PE-03,Ethernet1,True
+rr,P-02,Ethernet1,rr,P-01,Ethernet1,True
+rr,P-02,Ethernet2,pe,PE-02,Ethernet1,True
+rr,P-02,Ethernet3,pe,PE-04,Ethernet1,True
+rr,P-02,Ethernet4,pe,PE-04,Ethernet2,True
+rr,P-02,Ethernet5,pe,PE-03,Ethernet2,True
+pe,PE-01,Ethernet1,rr,P-01,Ethernet3,True
+pe,PE-01,Ethernet2,pe,PE-02,Ethernet3,True
+pe,PE-01,Ethernet3,l3_interface,,,True
+pe,PE-01,Ethernet3.10,point_to_point_service,,,True
+pe,PE-01,Ethernet3.100,l3_interface,,,True
+pe,PE-02,Ethernet1,rr,P-02,Ethernet2,True
+pe,PE-02,Ethernet2,rr,P-01,Ethernet2,True
+pe,PE-02,Ethernet3,pe,PE-01,Ethernet2,True
+pe,PE-02,Ethernet4,,,,True
+pe,PE-03,Ethernet1,rr,P-01,Ethernet4,True
+pe,PE-03,Ethernet2,rr,P-02,Ethernet5,True
+pe,PE-04,Ethernet1,rr,P-02,Ethernet3,True
+pe,PE-04,Ethernet2,rr,P-02,Ethernet4,True
+pe,PE-04,Ethernet3,l3_interface,,,True
+pe,PE-04,Ethernet3.10,point_to_point_service,,,True
+pe,PE-04,Ethernet3.200,l3_interface,,,True
