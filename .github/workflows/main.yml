@@ -62,5 +62,6 @@ jobs:
       #       workflows:
       #         - 'sites/site_1/**'
       - name: Test configuration
-        run: ansible-playbook playbooks/tfd-mpls-topology-deploy.yml --tags build
+        run: make build
+        working-directory: /home/bell/avd-mpls1
         # if: steps.filter-site1.outputs.workflows == 'true'
