@@ -14,8 +14,8 @@ jobs:
       - name: Hi
         run: echo "Hello World!"
 
-      - name: Checkout
-        uses: actions/checkout@v3
+      # - name: Checkout
+      #   uses: actions/checkout@v3
 
       # - name: Setup Python
       #   uses: actions/setup-python@v3
@@ -61,7 +61,7 @@ jobs:
       #     filters: |
       #       workflows:
       #         - 'sites/site_1/**'
-      - name: Test configuration
-        run: make build
-        # working-directory: /home/bell/avd-mpls1
-        # if: steps.filter-site1.outputs.workflows == 'true'
+      # - name: Test configuration
+      #   run: make build
+      #   # working-directory: /home/bell/avd-mpls1
+      #   # if: steps.filter-site1.outputs.workflows == 'true'
